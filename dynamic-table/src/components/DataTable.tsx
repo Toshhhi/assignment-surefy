@@ -1,7 +1,7 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import type { RootState } from '../redux/store';
-import { setSearch, setSort } from '../redux/tableSlice';
+import { setSearch, setSort, setPage } from '../redux/tableSlice';
 import {
   Table,
   TableBody,
@@ -13,6 +13,7 @@ import {
   TextField,
   TableSortLabel
 } from '@mui/material';
+import Pagination from '@mui/material/Pagination';
 
 const DataTable: React.FC = () => {
   const dispatch = useDispatch();
@@ -21,6 +22,8 @@ const DataTable: React.FC = () => {
   const search = useSelector((state: RootState) => state.table.search);
   const sortField = useSelector((state: RootState) => state.table.sortField);
   const sortOrder = useSelector((state: RootState) => state.table.sortOrder);
+  const page = useSelector((state: RootState) => state.table.page);
+  const rowsPerPage = 10;
 
   const filteredRows = rows.filter((row) =>
     Object.values(row).some((value) =>
@@ -37,6 +40,12 @@ const DataTable: React.FC = () => {
     if (valA > valB) return sortOrder === 'asc' ? 1 : -1;
     return 0;
   });
+
+  const paginatedRows = sortedRows.slice(
+    (page - 1) * rowsPerPage,
+    page * rowsPerPage
+    );
+  const pageCount = Math.ceil(sortedRows.length / rowsPerPage);
 
   return (
     <>
@@ -67,7 +76,7 @@ const DataTable: React.FC = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {sortedRows.map((row) => (
+            {paginatedRows.map((row) => (
               <TableRow key={row.id}>
                 <TableCell>{row.id}</TableCell>
                 <TableCell>{row.name}</TableCell>
@@ -79,6 +88,13 @@ const DataTable: React.FC = () => {
           </TableBody>
         </Table>
       </TableContainer>
+        <Pagination
+        count={pageCount}
+        page={page}
+        onChange={(_, value) => dispatch(setPage(value))}
+        color="primary"
+        sx={{ mt: 2, display: 'flex', justifyContent: 'center' }}
+        />
     </>
   );
 };
