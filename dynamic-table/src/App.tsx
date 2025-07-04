@@ -1,7 +1,8 @@
 import React from "react";
 import DataTable from "./components/DataTable";
 import CsvImport from "./components/CsvImport";
-import { Box, Typography } from '@mui/material';
+import CsvExport from "./components/CsvExport";
+import { Box, Typography, Stack } from '@mui/material';
 
 const App: React.FC = () => {
    return(
@@ -10,7 +11,10 @@ const App: React.FC = () => {
         <Typography variant="h4" gutterBottom>
           Employee Data Table
         </Typography>
-        <CsvImport />
+        <Stack direction="row" spacing={2} justifyContent="center">
+          <CsvImport />
+          <CsvExport />
+        </Stack>
       </Box>
 
       <DataTable />
