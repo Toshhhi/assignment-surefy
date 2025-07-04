@@ -15,7 +15,7 @@ A responsive and feature-rich web app built using **React**, **TypeScript**, **R
 
 ---
 
-##Tech Stack
+## Tech Stack
 
 - **React + Vite + TypeScript**
 - **Redux Toolkit**
