@@ -68,12 +68,15 @@ const tableSlice = createSlice({
       }
       state.sortField = field;
     },
-    
+
     setPage: (state, action: PayloadAction<number>) => {
       state.page = action.payload;
+    },
+    setRows: (state, action: PayloadAction<Row[]>) => {
+    state.rows = action.payload;
     }
   }
 });
 
-export const { setSearch, setSort, setPage } = tableSlice.actions;
+export const { setSearch, setSort, setPage, setRows} = tableSlice.actions;
 export default tableSlice.reducer;
